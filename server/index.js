@@ -14,13 +14,8 @@ app.use(cors({
   methods: 'GET,POST,PUT,DELETE,PATCH',
   credentials:true,
 }))
-
-
 app.use(cookieParser());
 app.use(express.json());
-
-
-
 
 
 mongoose.connect(process.env.MONGO_URI,{
