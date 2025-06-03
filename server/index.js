@@ -10,7 +10,7 @@ const apiRouter = require('./Routes');
 // Middleware to parse JSON
 
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin:'https://patientcare-dashboardfrontend.vercel.app/',
   methods: 'GET,POST,PUT,DELETE,PATCH',
   credentials:true,
 }))
