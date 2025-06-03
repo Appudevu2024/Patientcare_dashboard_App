@@ -23,15 +23,21 @@ app.use(express.json());
 
 
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI,{
+   useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 .then(() => {
   console.log('✅ Connected to MongoDB');
 })
 .catch((err) => {
   console.error('MongoDB connection error:', err);
 });
-
-
+// Start server
+const port = process.env.PORT;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
 
 
@@ -44,13 +50,7 @@ app.get('/', (req, res) => {
   res.send('Hello, Express!');
 });
 
-app.post('/test-body', (req, res) => {
-  console.log('Received:', req.body);
-  res.json({ received: req.body });
-});
 
-// Start server
-const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+
+
+
