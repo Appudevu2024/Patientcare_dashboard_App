@@ -59,7 +59,7 @@ export default function AdminPanel() {
   }, [location.search, location.state, initialized]);
 
   let loggedInUser = null;
-  if (adminData?.adminExist?._id) {
+  if (adminData?._id) {
     loggedInUser = { name: 'Admin', role: 'Admin' };
   } else if (doctorData?.doctorExist?._id) {
     loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor' };
