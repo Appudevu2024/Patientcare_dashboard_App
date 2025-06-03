@@ -1,62 +1,62 @@
 const { image } = require("../Config/cloudinaryConfig");
 const adminDb = require("../Models/adminModel");
 const createToken = require("../Utilities/generateToken");
-const { hashPassword,comparePassword} = require("../Utilities/passwordUtilities");
-const uploadToCloudinary=require('../Utilities/imageUpload')
+const { hashPassword, comparePassword } = require("../Utilities/passwordUtilities");
+const uploadToCloudinary = require('../Utilities/imageUpload')
 
 
 
-const register=async (req,res)=>{
+const register = async (req, res) => {
     try {
 
-        const {email,password}=req.body;
+        const { email, password } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'All fields are required' })
         }
 
-        const alreadyExist=  await adminDb.findOne({ email });
+        const alreadyExist = await adminDb.findOne({ email });
         if (alreadyExist) {
             return res.status(400).json({ error: 'Email already exist' })
         }
 
-         const hashedPassword = await hashPassword(password);
-         if (!req.file) {
+        const hashedPassword = await hashPassword(password);
+        if (!req.file) {
             return res.status(400).json({ error: 'Image not found' })
         }
         console.log(req.file);
         const cloudinaryRes = await uploadToCloudinary(req.file.path)
-    
-        
-         const newAdmin= new adminDb({
-            email,password: hashedPassword,image:cloudinaryRes
+
+
+        const newAdmin = new adminDb({
+            email, password: hashedPassword, image: cloudinaryRes
         })
         const saved = await newAdmin.save();
         if (saved) {
             const token = createToken(saved._id)
             //console.log(token,"token");
             res.cookie("Admin_token", token);
-            
-            return res.status(200).json({ message: 'Admin Created' },saved)
+
+            return res.status(200).json({ message: 'Admin Created' }, saved)
         }
 
-        
+
     } catch (error) {
         console.log(error);
-        res.status(error.status || 500).json({ error: error.message || 'Internal server error' }) 
+        res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
     }
 }
 
 
-const loggedin= async (req, res) => {
+const loggedin = async (req, res) => {
     try {
 
-    // Only accessible by verified admin
-    res.json({ message: 'Welcome Admin' });
-  }catch (error) {
-    console.log(error);
-    res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
-}
+        // Only accessible by verified admin
+        res.json({ message: 'Welcome Admin' });
+    } catch (error) {
+        console.log(error);
+        res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
+    }
 }
 
 const login = async (req, res) => {
@@ -79,18 +79,28 @@ const login = async (req, res) => {
             return res.status(400).json({ error: 'Passwords does not  match' })
         }
         res.clearCookie('Admin_token');
-        res.clearCookie('Staff_token');  
-        const token = createToken(adminExist._id,adminExist.role)
+        res.clearCookie('Staff_token');
+        const token = createToken(adminExist._id, adminExist.role)
         //console.log(token,"token"); 
-        
+
         res.cookie("Admin_token", token);
         console.log(token)
-        return res.status(200).json({ message: 'Admin login successful',  user: {
-    _id: adminExist._id,
-    email: adminExist.email,
-    role: adminExist.role,
-    image: adminExist.image
-  } })
+        console.log("Returning user data:", {
+            _id: adminExist._id,
+            email: adminExist.email,
+            role: adminExist.role,
+            image: adminExist.image
+        });
+
+
+        return res.status(200).json({
+            message: 'Admin login successful', user: {
+                _id: adminExist._id,
+                email: adminExist.email,
+                role: adminExist.role,
+                image: adminExist.image
+            }
+        })
 
     } catch (error) {
         console.log(error);
@@ -99,13 +109,13 @@ const login = async (req, res) => {
 }
 
 
-const logout= async(req,res)=>{
+const logout = async (req, res) => {
     try {
         res.clearCookie('Admin_token');
         return res.status(200).json({ message: 'Admin logout successful' })
     } catch (error) {
         console.log(error);
-        res.status(error.status || 500).json({ error: error.message || 'Internal server error' }) 
+        res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
     }
 }
 
@@ -113,8 +123,8 @@ const logout= async(req,res)=>{
 const adminDetails = async (req, res) => {
     try {
 
-        const { email} = req.body;
-        
+        const { email } = req.body;
+
         if (!email) {
             return res.status(400).json({ error: 'Email is  required' })
         }
@@ -124,7 +134,7 @@ const adminDetails = async (req, res) => {
         if (!adminExist) {
             return res.status(400).json({ error: 'Admin not found' })
         }
-        
+
         return res.status(200).json({ message: 'Admin details', adminExist })
 
     } catch (error) {
@@ -144,47 +154,47 @@ const updateAdmindata = async (req, res) => {
             return res.status(400).json({ error: 'Image not found' })
         }
         const cloudinaryRes = await uploadToCloudinary(req.file.path)
-        const updatedAdmin = await adminDb.findOneAndUpdate({email}, {password:hashedPassword ,image:cloudinaryRes},{ new: true, runValidators: true });
+        const updatedAdmin = await adminDb.findOneAndUpdate({ email }, { password: hashedPassword, image: cloudinaryRes }, { new: true, runValidators: true });
         if (!updatedAdmin) return res.status(404).json({ message: 'Admin not found' });
         const savedadmin = await updatedAdmin.save();
-        
-        return res.status(200).json("Admin data updated successfully",savedadmin);
+
+        return res.status(200).json("Admin data updated successfully", savedadmin);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
 
 
-const deleteAdmin= async (req, res) => {
+const deleteAdmin = async (req, res) => {
     try {
-      const { email } = req.body;
-  
-      if (!email) {
-        return res.status(400).json({ error: 'Email is required' });
-      }
-  
-      const deletedAdmin = await adminDb.findOneAndDelete({ email });
-  
-      if (!deletedAdmin) {
-        return res.status(404).json({ message: 'Admin not found' });
-      }
-  
-      return res.status(200).json({ message: 'Admin deleted successfully', deletedAdmin });
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
+        }
+
+        const deletedAdmin = await adminDb.findOneAndDelete({ email });
+
+        if (!deletedAdmin) {
+            return res.status(404).json({ message: 'Admin not found' });
+        }
+
+        return res.status(200).json({ message: 'Admin deleted successfully', deletedAdmin });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: error.message || 'Internal server error' });
+        console.error(error);
+        return res.status(500).json({ error: error.message || 'Internal server error' });
     }
-  }
+}
 
 
 
 
-module.exports={
+module.exports = {
     register,
-     login,
-     logout,
-     loggedin,
-     adminDetails,
-     updateAdmindata,
-     deleteAdmin
+    login,
+    logout,
+    loggedin,
+    adminDetails,
+    updateAdmindata,
+    deleteAdmin
 }
