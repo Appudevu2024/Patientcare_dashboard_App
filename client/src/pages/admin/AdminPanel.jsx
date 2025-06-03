@@ -28,7 +28,7 @@ export default function AdminPanel() {
   const [showCreateAppointment, setShowCreateAppointment] = useState(false);
   const [appointmentToEdit, setAppointmentToEdit] = useState(null);
   const navigate = useNavigate();
- const adminData = useSelector((state) => state.admin?.admin);
+  const adminData = useSelector((state) => state.admin?.admin);
   const doctorData = useSelector((state) => state.doctor?.doctor);
   const staffData = useSelector((state) => state.staff?.staff);
   const [initialized, setInitialized] = useState(false);
@@ -59,22 +59,13 @@ export default function AdminPanel() {
   }, [location.search, location.state, initialized]);
 
   let loggedInUser = null;
-  // if (adminData?.adminExist?._id) {
-  //   loggedInUser = { name: 'Admin', role: 'Admin' };
- if (adminData?._id && adminData?.role === 'admin') {
-  loggedInUser = { name: 'Admin', role: 'Admin' };
-}
-else if (doctorData?.doctorExist?._id) {
-  loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor' };
-} else if (staffData?.staffExist?._id) {
-  loggedInUser = { name: staffData.staffExist.name, role: 'Staff' };
-}
-
-  //  else if (doctorData?.doctorExist?._id) {
-  //   loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor' };
-  // } else if (staffData?.staffExist?._id) {
-  //   loggedInUser = { name: staffData.staffExist.name, role: 'Staff' };
-  // }
+  if (adminData?.adminExist?._id) {
+    loggedInUser = { name: 'Admin', role: 'Admin' };
+  } else if (doctorData?.doctorExist?._id) {
+    loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor' };
+  } else if (staffData?.staffExist?._id) {
+    loggedInUser = { name: staffData.staffExist.name, role: 'Staff' };
+  }
 
   const handleLogout = async () => {
     try {
