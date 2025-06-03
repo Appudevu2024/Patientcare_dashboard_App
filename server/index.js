@@ -45,7 +45,9 @@ app.get('/', (req, res) => {
   res.send('Hello, Express!');
 });
 
-
+app.get('/test', (req, res) => {
+  res.status(200).json({ message: 'Backend working ✅' });
+});
 
 
 
