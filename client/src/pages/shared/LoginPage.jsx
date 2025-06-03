@@ -38,6 +38,7 @@ function LoginPage() {
       if (role === 'staff') dispatch(saveStaff(data.user));
 
       toast.success(`${role} login successful`, { position: 'top-center' });
+      console.log('navigating to', redirectPath);
       setTimeout(() => navigate(redirectPath), 100);
     } catch (err) {
       toast.error(err?.response?.data?.error || 'Login failed', {
