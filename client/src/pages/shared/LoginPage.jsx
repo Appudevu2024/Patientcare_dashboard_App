@@ -33,7 +33,7 @@ function LoginPage() {
       }
 
       const data = await loginFn(values);
-      if (role === 'admin') dispatch(saveAdmin({ adminExist: data.user }));
+      if (role === 'admin') dispatch(saveAdmin(data.user));
       if (role === 'doctor') dispatch(saveDoctor(data.user));
       if (role === 'staff') dispatch(saveStaff(data.user));
 
