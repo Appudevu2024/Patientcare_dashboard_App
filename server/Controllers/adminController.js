@@ -61,13 +61,13 @@ const loggedin = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        console.log(' req.body =', req.body);
+       
         const { email, password } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'All fields are required' })
         }
-
+console.log('🔍 Incoming login data:', req.body);
         const adminExist = await adminDb.findOne({ email })
         console.log(adminExist)
         if (!adminExist) {
