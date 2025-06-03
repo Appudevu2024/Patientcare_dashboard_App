@@ -1,5 +1,4 @@
-
-import axiosInstance from "../axios/axiosinstance"
+import axiosInstance from "../axios/axiosInstance"
 export const listAllStaffs = async () => {
     try {
       const res = await axiosInstance.get('/staff/liststaffs');

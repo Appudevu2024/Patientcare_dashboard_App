@@ -1,4 +1,4 @@
-import axiosInstance from "../axios/axiosinstance"
+import axiosInstance from "../axios/axiosInstance"
 
 export const adminLogin=async (values)=>{
   try {

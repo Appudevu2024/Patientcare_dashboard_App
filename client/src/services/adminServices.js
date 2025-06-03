@@ -1,5 +1,5 @@
 
-import axiosInstance from "../axios/axiosinstance"
+import axiosInstance from "../axios/axiosInstance"
 
 export const doctorRegister = async (formData) => {
   try {
