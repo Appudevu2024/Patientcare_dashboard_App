@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .input-dark {
+    @apply bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600;
+  }
+  
+.modal-bloodbank-slim h1,
+.modal-bloodbank-slim h2,
+.modal-bloodbank-slim .search-bar,
+.modal-bloodbank-slim .header,
+.modal-bloodbank-slim .filter,
+.modal-bloodbank-slim input,
+.modal-bloodbank-slim label,
+.modal-bloodbank-slim button {
+  display: none !important;
+}
+
+/* If the table has more than 3 columns, hide extra ones */
+.modal-bloodbank-slim table thead th:nth-child(n+4),
+.modal-bloodbank-slim table tbody td:nth-child(n+4) {
+  display: none !important;
+}
