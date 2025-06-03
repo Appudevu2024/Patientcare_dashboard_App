@@ -85,7 +85,12 @@ const login = async (req, res) => {
         
         res.cookie("Admin_token", token);
         console.log(token)
-        return res.status(200).json({ message: 'Admin login successful',  user: adminExist })
+        return res.status(200).json({ message: 'Admin login successful',  user: {
+    _id: adminExist._id,
+    email: adminExist.email,
+    role: adminExist.role,
+    image: adminExist.image
+  } })
 
     } catch (error) {
         console.log(error);
