@@ -16,15 +16,13 @@ export const adminLogin = async (values) => {
   try {
     const res = await axiosInstance.post(
       '/admin/login',
-      {
-        email: values.email,
-        password: values.password,
-      },
+     values,
       {
         withCredentials: true, // ✅ this enables cookie storage
       }
     );
     console.log('Admin login response:', res.data); 
+     document.cookie = `Admin_token=${res.data.token}; path=/`;
     return res.data;
   } catch (error) {
     console.error('Error in login:', error);

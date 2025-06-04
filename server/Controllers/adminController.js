@@ -152,7 +152,7 @@ const login = async (req, res) => {
     });
 
     return res.status(200).json({
-      message: 'Admin login successful',
+      message: 'Admin login successful',token,
       user: {
         _id: adminExist._id,
         email: adminExist.email,
