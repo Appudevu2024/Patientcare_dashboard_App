@@ -129,8 +129,8 @@ const login = async (req, res) => {
     }
 
     // Clear other tokens if any
-    res.clearCookie('Admin_token', { path: '/' });
-    res.clearCookie('Staff_token', { path: '/' });
+    // res.clearCookie('Admin_token', { path: '/' });
+    // res.clearCookie('Staff_token', { path: '/' });
 
     const token = createToken(adminExist._id, adminExist.role);
     console.log(token);
