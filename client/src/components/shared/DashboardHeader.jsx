@@ -16,6 +16,7 @@ function DashboardHeader() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   const adminData = useSelector((state) => state.admin?.admin);
+  console.log(adminData);
   const doctorData = useSelector((state) => state.doctor?.doctor);
   const staffData = useSelector((state) => state.staff?.staff);
 
