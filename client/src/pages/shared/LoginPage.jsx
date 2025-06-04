@@ -40,6 +40,8 @@ function LoginPage() {
       toast.success(`${role} login successful`, { position: 'top-center' });
       console.log('navigating to', redirectPath);
       setTimeout(() => navigate(redirectPath), 100);
+       console.log("✅ onSubmit finished");
+
     } catch (err) {
       toast.error(err?.response?.data?.error || 'Login failed', {
         position: 'top-center',

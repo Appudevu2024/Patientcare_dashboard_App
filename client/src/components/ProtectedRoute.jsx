@@ -11,14 +11,17 @@ const useAuth = (allowedRoles) => {
     
     const tokens = ['Admin_token', 'doctor_token', 'staff_token'];
     const tokenString = tokens
-    .map(name => document.cookie.split('; ').find(cookie => cookie.startsWith(name)))
-    .find(Boolean); 
+     .map(name => {
+        const match = document.cookie.split('; ').find(cookie => cookie.startsWith(name + '='));
+        return match ? { name, value: match.split('=')[1] } : null;
+      })
+      .find(Boolean);
     console.log(tokenString);
     
         if (tokenString) {
-          const token = tokenString.split('=')[1];
+          // const token = tokenString.split('=')[1];
           try {
-            const decoded = jwtDecode(token);
+            const decoded = jwtDecode(tokenString.value);
             console.log(decoded.role);
             
             setRole(decoded.role);
@@ -35,7 +38,7 @@ const useAuth = (allowedRoles) => {
 };
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { isAuthenticated, role, loading } = useAuth();
+  const { isAuthenticated, role, loading } = useAuth(allowedRoles);
    if (loading)  return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div className="spinner" />
@@ -44,7 +47,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (!isAuthenticated|| !allowedRoles.includes(role)) {
     // Redirect to login if not authenticated
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   
