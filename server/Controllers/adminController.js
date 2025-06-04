@@ -59,54 +59,112 @@ const loggedin = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
-    try {
+// const login = async (req, res) => {
+//     try {
        
-        const { email, password } = req.body;
+//         const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: 'All fields are required' })
-        }
-console.log('🔍 Incoming login data:', req.body);
-        const adminExist = await adminDb.findOne({ email })
-        console.log(adminExist)
-        if (!adminExist) {
-            return res.status(400).json({ error: 'Admin not found' })
-        }
-        const passwordMatch = await comparePassword(password, adminExist.password)
-        console.log(passwordMatch);
-        if (!passwordMatch) {
-            return res.status(400).json({ error: 'Passwords does not  match' })
-        }
-        res.clearCookie('Admin_token');
-        res.clearCookie('Staff_token');
-        const token = createToken(adminExist._id, adminExist.role)
-        //console.log(token,"token"); 
+//         if (!email || !password) {
+//             return res.status(400).json({ error: 'All fields are required' })
+//         }
+// console.log('🔍 Incoming login data:', req.body);
+//         const adminExist = await adminDb.findOne({ email })
+//         console.log(adminExist)
+//         if (!adminExist) {
+//             return res.status(400).json({ error: 'Admin not found' })
+//         }
+//         const passwordMatch = await comparePassword(password, adminExist.password)
+//         console.log(passwordMatch);
+//         if (!passwordMatch) {
+//             return res.status(400).json({ error: 'Passwords does not  match' })
+//         }
+//         res.clearCookie('Admin_token');
+//         res.clearCookie('Staff_token');
+//         const token = createToken(adminExist._id, adminExist.role)
+//         //console.log(token,"token"); 
 
-        res.cookie("Admin_token", token);
-        console.log(token)
-        console.log("Returning user data:", {
-            _id: adminExist._id,
-            email: adminExist.email,
-            role: adminExist.role,
-            image: adminExist.image
-        });
+//         res.cookie("Admin_token", token);
+//         console.log(token)
+//         console.log("Returning user data:", {
+//             _id: adminExist._id,
+//             email: adminExist.email,
+//             role: adminExist.role,
+//             image: adminExist.image
+//         });
 
 
-        return res.status(200).json({
-            message: 'Admin login successful', user: {
-                _id: adminExist._id,
-                email: adminExist.email,
-                role: adminExist.role,
-                image: adminExist.image
-            }
-        })
+//         return res.status(200).json({
+//             message: 'Admin login successful', user: {
+//                 _id: adminExist._id,
+//                 email: adminExist.email,
+//                 role: adminExist.role,
+//                 image: adminExist.image
+//             }
+//         })
 
-    } catch (error) {
-        console.log(error);
-        res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
+//     } catch (error) {
+//         console.log(error);
+//         res.status(error.status || 500).json({ error: error.message || 'Internal server error' })
+//     }
+// }
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
     }
-}
+    console.log('🔍 Incoming login data:', req.body);
+
+    const adminExist = await adminDb.findOne({ email });
+    console.log(adminExist);
+    if (!adminExist) {
+      return res.status(400).json({ error: 'Admin not found' });
+    }
+
+    const passwordMatch = await comparePassword(password, adminExist.password);
+    console.log(passwordMatch);
+    if (!passwordMatch) {
+      return res.status(400).json({ error: 'Passwords does not match' });
+    }
+
+    // Clear other tokens if any
+    res.clearCookie('Admin_token', { path: '/' });
+    res.clearCookie('Staff_token', { path: '/' });
+
+    const token = createToken(adminExist._id, adminExist.role);
+    console.log(token);
+
+    // Set cookie with proper options for Vercel + frontend access
+    res.cookie('Admin_token', token, {
+      httpOnly: false,    // frontend JS can read it
+      secure: true,       // HTTPS required on Vercel
+      sameSite: 'None',   // cross-site cookies allowed
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // 1 day (optional)
+    });
+
+    console.log('Returning user data:', {
+      _id: adminExist._id,
+      email: adminExist.email,
+      role: adminExist.role,
+      image: adminExist.image,
+    });
+
+    return res.status(200).json({
+      message: 'Admin login successful',
+      user: {
+        _id: adminExist._id,
+        email: adminExist.email,
+        role: adminExist.role,
+        image: adminExist.image,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(error.status || 500).json({ error: error.message || 'Internal server error' });
+  }
+};
 
 
 const logout = async (req, res) => {

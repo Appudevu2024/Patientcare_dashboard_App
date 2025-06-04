@@ -1,17 +1,36 @@
 import axiosInstance from "../axios/axiosInstance"
 
-export const adminLogin=async (values)=>{
+// export const adminLogin=async (values)=>{
+//   try {
+//     const res= await axiosInstance.post('/admin/login', { email, password },{
+//       withCredentials: true,
+//     });
+//     console.log('Admin login response:', res.data); 
+//     return res.data;
+//   } catch (error) {
+//     console.error('Error in login:', error);
+//     throw error;
+//   }
+// }
+export const adminLogin = async (values) => {
   try {
-    const res= await axiosInstance.post('/admin/login', values,{
-      withCredentials: true,
-    });
+    const res = await axiosInstance.post(
+      '/admin/login',
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        withCredentials: true, // ✅ this enables cookie storage
+      }
+    );
     console.log('Admin login response:', res.data); 
     return res.data;
   } catch (error) {
     console.error('Error in login:', error);
     throw error;
   }
-}
+};
 
 export const doctorLogin = async (values) => {
   try {
