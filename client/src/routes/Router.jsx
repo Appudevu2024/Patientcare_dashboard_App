@@ -83,10 +83,10 @@ export const router = createBrowserRouter([
         path: 'appointments', //  /adminpanel/appointments
         element: <Appointments />,
       },
-      {
-        path: 'create-appointment',
-        element: <CreateAppointment />,
-      },
+      // {
+      //   path: 'create-appointment',
+      //   element: <CreateAppointment />,
+      // },
       {
         path: 'create-appointment/:id?',
         element: <CreateAppointment />,
