@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 
 const useAuth = (allowedRoles) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,14 +46,14 @@ const useAuth = (allowedRoles) => {
     //       }
     //     }
     
-   // console.log('🍪 document.cookie:', document.cookie);
+    console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
     const result = getTokenFromCookies();
   if (result) {
     try {
       const decoded = jwtDecode(result.token);
       console.log("Decoded Token:", decoded);
-      setRole(decoded.role.toLowerCase());
+      setRole((decoded?.role||'').toLowerCase());
       setIsAuthenticated(true);
     } catch (err) {
       console.error('Invalid token', err);
