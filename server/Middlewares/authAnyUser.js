@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const authAnyUser = (req, res, next) => {
-  const { Admin_token, Doctor_token, staff_token } = req.cookies;
+  const { Admin_token, Doctor_token, Staff_token } = req.cookies;
 
-  let token = Admin_token || Doctor_token || staff_token;
+  let token = Admin_token || Doctor_token || Staff_token;
   if (!token) {
     return res.status(401).json({ error: 'JWT token not found' });
   }
