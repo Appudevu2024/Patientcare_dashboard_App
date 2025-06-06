@@ -9,7 +9,7 @@ const useAuth = (allowedRoles) => {
 
   const getTokenFromCookies = () => {
   const cookie = document.cookie;
-  
+  console.log(cookie)
   for (let tokenName of ['Admin_token', 'doctor_token', 'staff_token']) {
     const match = cookie.match(new RegExp(`${tokenName}=([^;]+)`));
     if (match) return { token: match[1], tokenName };
