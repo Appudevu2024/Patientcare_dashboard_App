@@ -114,7 +114,7 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-    console.log('🔍 Incoming login data:', req.body);
+    console.log(' Incoming login data:', req.body);
 
     const adminExist = await adminDb.findOne({ email });
     console.log(adminExist);
