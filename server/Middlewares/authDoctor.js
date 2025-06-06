@@ -10,12 +10,12 @@
      const {doctor_token} = req.cookies ;
     
      if(!doctor_token){
-         return res.status(401).json({error:'Jwt not found'});
+         return res.status(401).json({error:'Unauthorized'});
      }
      
      const verifiedToken=jwt.verify(doctor_token, process.env.JWT_SECRET)
      if(!verifiedToken){
-         return res.status(401).json({error:'User not authorized'});
+         return res.status(401).json({error:'Doctor not authorized'});
      }
     
  
@@ -23,7 +23,7 @@
          return res.status(401).json({error:'Access denied'});
      }
  
-     req.user=verifiedToken;
+     req.doctor=verifiedToken.id;
      next();
  } catch (error) {
      
