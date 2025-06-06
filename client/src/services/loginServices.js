@@ -35,7 +35,8 @@ export const doctorLogin = async (values) => {
     const res = await axiosInstance.post('/doctor/login', values, {
       withCredentials: true,
     });
-    console.log(res.data)
+    console.log('Doctor login response:',res.data)
+     document.cookie = `doctor_token=${res.data.token}; path=/`;
     return res.data;
   
   } catch (error) {

@@ -19,14 +19,37 @@ import DoctorPatients from './DoctorPatients';
 import AddPrescription from './AddPrescription';
 
 export default function DoctorPanel() {
-  const [searchParams] = useSearchParams();
-  const initialTab = searchParams.get('tab') || 'dashboard';
-  const [activeTab, setActiveTab] = useState(initialTab);
+ // const [searchParams] = useSearchParams();
+ // const initialTab = searchParams.get('tab') || 'dashboard';
+  const [activeTab, setActiveTab] = useState(() => {
+      const query = new URLSearchParams(location.search);
+      return query.get('tab') || location.state?.defaultTab || 'dashboard';
+    });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [editingPatientId, setEditingPatientId] = useState(null);
+  const [initialized, setInitialized] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+  const location = useLocation();
+ const doctorData = useSelector((state) => state.doctor?.doctorExist);
+  useEffect(() => {
+     const query = new URLSearchParams(location.search);
+    const tab = query.get('tab');
 
-  const handleEditPrescription = (patientId) => {
+     if (tab) {
+      setActiveTab(tab);
+      setInitialized(true);
+    }
+
+    if (location.state?.defaultTab) {
+      setActiveTab(location.state.defaultTab);
+      navigate(`?tab=${location.state.defaultTab}`, { replace: true });
+    }
+  }, [location.state, navigate]);
+
+   const handleEditPrescription = (patientId) => {
       console.log('Editing prescription for patient ID:', patientId);
     setEditingPatientId(patientId);
   };
@@ -34,20 +57,6 @@ export default function DoctorPanel() {
   const handleClosePrescription = () => {
     setEditingPatientId(null);
   };
-
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { theme } = useContext(ThemeContext);
-  const location = useLocation();
-  const adminData = useSelector((state) => state.admin?.admin);
-
-  useEffect(() => {
-    if (location.state?.defaultTab) {
-      setActiveTab(location.state.defaultTab);
-      navigate(`?tab=${location.state.defaultTab}`, { replace: true });
-    }
-  }, [location.state, navigate]);
 
   const handleLogout = async () => {
     try {
