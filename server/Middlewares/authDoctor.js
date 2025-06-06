@@ -7,13 +7,13 @@
  try {
      //const {token}=req.cookies;
      //console.log(req.cookies);
-     const {doctor_token} = req.cookies ;
+     const {Doctor_token} = req.cookies ;
     
-     if(!doctor_token){
+     if(!Doctor_token){
          return res.status(401).json({error:'Unauthorized'});
      }
      
-     const verifiedToken=jwt.verify(doctor_token, process.env.JWT_SECRET)
+     const verifiedToken=jwt.verify(Doctor_token, process.env.JWT_SECRET)
      if(!verifiedToken){
          return res.status(401).json({error:'Doctor not authorized'});
      }
