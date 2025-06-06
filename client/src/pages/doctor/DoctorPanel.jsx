@@ -19,12 +19,12 @@ import DoctorPatients from './DoctorPatients';
 import AddPrescription from './AddPrescription';
 
 export default function DoctorPanel() {
- // const [searchParams] = useSearchParams();
- // const initialTab = searchParams.get('tab') || 'dashboard';
+  // const [searchParams] = useSearchParams();
+  // const initialTab = searchParams.get('tab') || 'dashboard';
   const [activeTab, setActiveTab] = useState(() => {
-      const query = new URLSearchParams(location.search);
-      return query.get('tab') || location.state?.defaultTab || 'dashboard';
-    });
+    const query = new URLSearchParams(location.search);
+    return query.get('tab') || location.state?.defaultTab || 'dashboard';
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [editingPatientId, setEditingPatientId] = useState(null);
@@ -33,12 +33,12 @@ export default function DoctorPanel() {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const location = useLocation();
- const doctorData = useSelector((state) => state.doctor?.doctorExist);
+  const doctorData = useSelector((state) => state.doctor?.doctorExist);
   useEffect(() => {
-     const query = new URLSearchParams(location.search);
+    const query = new URLSearchParams(location.search);
     const tab = query.get('tab');
 
-     if (tab) {
+    if (tab) {
       setActiveTab(tab);
       setInitialized(true);
     }
@@ -49,8 +49,8 @@ export default function DoctorPanel() {
     }
   }, [location.state, navigate]);
 
-   const handleEditPrescription = (patientId) => {
-      console.log('Editing prescription for patient ID:', patientId);
+  const handleEditPrescription = (patientId) => {
+    console.log('Editing prescription for patient ID:', patientId);
     setEditingPatientId(patientId);
   };
 
@@ -60,9 +60,9 @@ export default function DoctorPanel() {
 
   const handleLogout = async () => {
     try {
-      if (adminData?.email) {
-        await adminLogout();
-        dispatch(clearAdmin());
+      if (doctorData?.email) {
+        await doctorLogout();
+        dispatch(clearDoctor());
       }
       await persistor.purge();
       navigate('/');
@@ -144,31 +144,31 @@ export default function DoctorPanel() {
         )}
         {activeTab === 'appointments' && <DoctorAppointment />}
         {activeTab === 'patients' && <DoctorPatients />}
-      
 
-            {activeTab === 'bloodbank' && isModalOpen && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg max-w-5xl max-h-[90vh] overflow-y-auto p-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-bold">Blood Bank Information</h3>
-                    <button
-                      onClick={() => {
-                        setIsModalOpen(false);
-                        setActiveTab('dashboard');
-                        navigate('?tab=dashboard');
-                      }}
-                      className="btn btn-sm btn-circle btn-ghost dark:text-white"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                  <div className="modal-bloodbank-slim">
-                    <BloodBankData />
-                  </div>
-                </div>
+
+        {activeTab === 'bloodbank' && isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white dark:bg-gray-800 text-black dark:text-white rounded-lg shadow-lg max-w-5xl max-h-[90vh] overflow-y-auto p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-bold">Blood Bank Information</h3>
+                <button
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setActiveTab('dashboard');
+                    navigate('?tab=dashboard');
+                  }}
+                  className="btn btn-sm btn-circle btn-ghost dark:text-white"
+                >
+                  ✕
+                </button>
               </div>
-            )}
+              <div className="modal-bloodbank-slim">
+                <BloodBankData />
+              </div>
+            </div>
           </div>
+        )}
       </div>
-      );
+    </div>
+  );
 }
