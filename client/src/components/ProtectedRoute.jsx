@@ -9,14 +9,21 @@ const useAuth = (allowedRoles) => {
 
   const getTokenFromCookies = () => {
   const cookie = document.cookie;
-  console.log(cookie)
-  for (let tokenName of ['Admin_token', 'doctor_token', 'staff_token']) {
+
+  const roleToTokenMap = {
+    admin: 'Admin_token',
+    doctor: 'Doctor_token',
+    staff: 'Staff_token',
+  };
+
+  for (let role of allowedRoles) {
+    const tokenName = roleToTokenMap[role.toLowerCase()];
     const match = cookie.match(new RegExp(`${tokenName}=([^;]+)`));
     if (match) return { token: match[1], tokenName };
   }
+
   return null;
 };
-
 
   useEffect(() => {
     
@@ -59,7 +66,7 @@ const useAuth = (allowedRoles) => {
 };
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { isAuthenticated, role, loading } = useAuth();
+  const { isAuthenticated, role, loading } = useAuth(allowedRoles);
    if (loading)  return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div className="spinner" />
