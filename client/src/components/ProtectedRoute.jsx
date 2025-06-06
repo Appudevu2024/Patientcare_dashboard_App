@@ -45,6 +45,7 @@ const useAuth = (allowedRoles) => {
     //         console.error('Invalid token', err);
     //       }
     //     }
+    
     console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
     const result = getTokenFromCookies();
