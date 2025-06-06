@@ -22,7 +22,7 @@ export const adminLogin = async (values) => {
       }
     );
     console.log('Admin login response:', res.data); 
-     document.cookie = `Admin_token=${res.data.token}; path=/`;
+    // document.cookie = `Admin_token=${res.data.token}; path=/`;
     return res.data;
   } catch (error) {
     console.error('Error in login:', error);
