@@ -72,7 +72,7 @@ const login = async (req, res) => {
         //console.log(token,"token");
         res.cookie("doctor_token", token);
         return res.status(200).json({
-            message: 'Doctor login successful', user: {
+            message: 'Doctor login successful', token, user: {
                 doctorExist
             }
         })
