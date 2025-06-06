@@ -15,14 +15,14 @@ function DashboardHeader() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const adminData = useSelector((state) => state.admin?.adminExist);
+  const adminData = useSelector((state) => state.admin?.admin);
   console.log(adminData);
   const doctorData = useSelector((state) => state.doctor?.doctor);
   const staffData = useSelector((state) => state.staff?.staff);
-console.log("🧩 Admin Data from Redux:", adminData);
+  console.log("🧩 Admin Data from Redux:", adminData);
 
   let loggedInUser = null;
-  if (adminData?.adminExist._id) {
+  if (adminData?._id) {
     loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.image };
   } else if (doctorData?.doctorExist?._id) {
     loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor', image: doctorData.doctorExist.image };
@@ -78,9 +78,14 @@ console.log("🧩 Admin Data from Redux:", adminData);
           {/* User Info + Logout */}
           {loggedInUser && (
             <div className="flex items-center gap-2">
-              <img
+              {/* <img
                 // src={loggedInUser?.image}
                 src={`/images/${loggedInUser?.image ||'Admin_img.avif'}`}
+                alt="User"
+                className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-full shadow-md"
+              /> */}
+              <img
+                src={loggedInUser?.image || '/images/Admin_img.avif'}
                 alt="User"
                 className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-full shadow-md"
               />
