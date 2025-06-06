@@ -67,7 +67,7 @@ const login = async (req, res) => {
             return res.status(400).json({ error: 'Passwords does not  match' })
         }
         res.clearCookie('Admin_token');
-        res.clearCookie('staff_token');
+        res.clearCookie('Staff_token');
         const token = createToken(doctorExist._id, doctorExist.role)
         console.log(token, "token");
         res.cookie("Doctor_token", token, {
