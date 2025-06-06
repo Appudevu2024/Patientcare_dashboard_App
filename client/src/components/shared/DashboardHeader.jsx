@@ -23,7 +23,7 @@ console.log("🧩 Admin Data from Redux:", adminData);
 
   let loggedInUser = null;
   if (adminData?._id) {
-    loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.adminExist.image };
+    loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.image };
   } else if (doctorData?.doctorExist?._id) {
     loggedInUser = { name: doctorData.doctorExist.name, role: 'Doctor', image: doctorData.doctorExist.image };
   } else if (staffData?.staffExist?._id) {
