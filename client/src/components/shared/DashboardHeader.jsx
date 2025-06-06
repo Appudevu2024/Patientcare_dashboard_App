@@ -25,8 +25,8 @@ function DashboardHeader() {
   let loggedInUser = null;
   if (adminData?._id) {
     loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.image };
-  } else if (doctorData?.doctorExist?._id) {
-    loggedInUser = { name: doctorData.doctorExist?.name ||'Doctor', role: 'Doctor', image: doctorData.doctorExist?.image || 'dummy-female-img.webp'};
+  } else if (doctorData?._id) {
+    loggedInUser = { name: doctorData.name ||'Doctor', role: 'Doctor', image: doctorData.image || 'dummy-female-img.webp'};
   } else if (staffData?.staffExist?._id) {
     loggedInUser = { name: staffData.staffExist.name, role: 'Staff', image: staffData.staffExist.image };
   }
