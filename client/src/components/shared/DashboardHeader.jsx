@@ -15,7 +15,7 @@ function DashboardHeader() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const adminData = useSelector((state) => state.admin?.admin);
+  const adminData = useSelector((state) => state.admin?.adminExist);
   console.log(adminData);
   const doctorData = useSelector((state) => state.doctor?.doctor);
   const staffData = useSelector((state) => state.staff?.staff);
