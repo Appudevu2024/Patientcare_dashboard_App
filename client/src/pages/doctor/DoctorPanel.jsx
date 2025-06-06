@@ -3,8 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../context/ThemeContext';
 import BloodBankData from '../shared/BloodBankData';
-import { adminLogout } from '../../services/loginServices';
-import { clearAdmin } from '../../redux/features/adminSlice';
+import { doctorLogout } from '../../services/loginServices';
+import { clearDoctor } from '../../redux/features/adminSlice';
 import { persistor } from '../../redux/store';
 import {
   LayoutDashboard,
@@ -19,6 +19,7 @@ import DoctorPatients from './DoctorPatients';
 import AddPrescription from './AddPrescription';
 
 export default function DoctorPanel() {
+   const location = useLocation();
   // const [searchParams] = useSearchParams();
   // const initialTab = searchParams.get('tab') || 'dashboard';
   const [activeTab, setActiveTab] = useState(() => {
@@ -32,7 +33,7 @@ export default function DoctorPanel() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
-  const location = useLocation();
+
   const doctorData = useSelector((state) => state.doctor?.doctorExist);
   useEffect(() => {
     const query = new URLSearchParams(location.search);
