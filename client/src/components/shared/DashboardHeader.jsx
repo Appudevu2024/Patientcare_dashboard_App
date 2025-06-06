@@ -32,7 +32,7 @@ function DashboardHeader() {
 
   const handleLogout = async () => {
     try {
-      if (adminData?.email) {
+      if (adminData?.email) { 
         await adminLogout();
         dispatch(clearAdmin());
       } else if (doctorData?.doctorExist?._id) {
