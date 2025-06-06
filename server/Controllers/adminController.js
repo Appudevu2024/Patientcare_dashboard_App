@@ -114,10 +114,10 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-    console.log(' Incoming login data:', req.body);
+   // console.log(' Incoming login data:', req.body);
 
     const adminExist = await adminDb.findOne({ email });
-    console.log(adminExist);
+    //console.log(adminExist);
     if (!adminExist) {
       return res.status(400).json({ error: 'Admin not found' });
     }
@@ -128,9 +128,9 @@ const login = async (req, res) => {
       return res.status(400).json({ error: 'Passwords does not match' });
     }
 
-    // Clear other tokens if any
-    // res.clearCookie('Admin_token', { path: '/' });
-    // res.clearCookie('Staff_token', { path: '/' });
+    //Clear other tokens if any
+    res.clearCookie('Admin_token', { path: '/' });
+    res.clearCookie('Staff_token', { path: '/' });
 
     const token = createToken(adminExist._id, adminExist.role);
     console.log(token);
