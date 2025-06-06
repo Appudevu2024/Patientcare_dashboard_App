@@ -70,7 +70,7 @@ const login = async (req, res) => {
         res.clearCookie('staff_token');
         const token = createToken(doctorExist._id, doctorExist.role)
         console.log(token, "token");
-        res.cookie("doctor_token", token, {
+        res.cookie("Doctor_token", token, {
             httpOnly: true,    // frontend JS can read it
             secure: true,       // HTTPS required on Vercel
             sameSite: 'None',   // cross-site cookies allowed
