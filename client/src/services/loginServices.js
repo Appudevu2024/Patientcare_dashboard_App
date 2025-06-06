@@ -37,7 +37,7 @@ export const doctorLogin = async (values) => {
     });
     console.log('Doctor login response:',res.data)
     const token = res.data.token;
-    document.cookie = `Doctor_token=${token}; path=/; secure; samesite=strict`;
+    //document.cookie = `Doctor_token=${token}; path=/; secure; samesite=strict`;
     return res.data;
   
   } catch (error) {
