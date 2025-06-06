@@ -68,9 +68,17 @@ const login = async (req, res) => {
         }
         res.clearCookie('Admin_token');
         res.clearCookie('staff_token');
-        const token = createToken(doctorExist._id, 'doctor')
-        //console.log(token,"token");
-        res.cookie("doctor_token", token);
+        const token = createToken(doctorExist._id, doctorExist.role)
+        console.log(token,"token");
+        res.cookie("doctor_token", token,{
+             httpOnly: false,    // frontend JS can read it
+      secure: true,       // HTTPS required on Vercel
+      sameSite: 'None',   // cross-site cookies allowed
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // 1 day (optional)
+        });
+
+        
         return res.status(200).json({
             message: 'Doctor login successful', token, user: {
                 doctorExist
