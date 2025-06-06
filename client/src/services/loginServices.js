@@ -36,7 +36,7 @@ export const doctorLogin = async (values) => {
       withCredentials: true,
     });
     console.log('Doctor login response:',res.data)
-     document.cookie = `doctor_token=${res.data.token}; path=/`;
+    document.cookie = `Doctor_token=${token}; path=/; secure; samesite=strict`;
     return res.data;
   
   } catch (error) {
