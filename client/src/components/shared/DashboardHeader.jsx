@@ -16,10 +16,11 @@ function DashboardHeader() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   const adminData = useSelector((state) => state.admin?.admin);
-  console.log(adminData);
-  const doctorData = useSelector((state) => state.doctor?.doctor);
+  //console.log(adminData);
+  const doctorData = useSelector((state) => state.doctor?.doctor?.doctorExist);
+   console.log(doctorData);
   const staffData = useSelector((state) => state.staff?.staff);
-  console.log("🧩 Admin Data from Redux:", adminData);
+  console.log("🧩 Doctor Data from Redux:", doctorData);
 
   let loggedInUser = null;
   if (adminData?._id) {
