@@ -100,7 +100,6 @@ function LoginPage() {
           required
         />
       </div>
-
       {/* Submit */}
       <div>
         <button
@@ -113,7 +112,6 @@ function LoginPage() {
     </form>
   </div>
 </div>
-
   );
 }
 
