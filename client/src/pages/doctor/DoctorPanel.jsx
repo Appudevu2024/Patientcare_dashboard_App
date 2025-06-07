@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../context/ThemeContext';
 import BloodBankData from '../shared/BloodBankData';
 import { doctorLogout } from '../../services/loginServices';
-import { clearDoctor } from '../../redux/features/adminSlice';
+import { clearDoctor } from '../../redux/features/doctorSlice';
 import { persistor } from '../../redux/store';
 import {
   LayoutDashboard,
