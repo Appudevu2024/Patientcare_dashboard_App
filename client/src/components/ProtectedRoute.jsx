@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import jwtDecode from 'jwt-decode'
 
+import { jwtDecode } from 'jwt-decode';
 const useAuth = (allowedRoles) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState('');
