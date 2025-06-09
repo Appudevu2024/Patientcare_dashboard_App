@@ -22,7 +22,7 @@ function DashboardHeader() {
   const staffData = useSelector((state) => state.staff?.staff);
  
 
-  let loggedInUser = null;
+  let loggedInUser = null;                                            
   if (adminData?._id) {
     loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.image };
   } else if (doctorData?._id) {
@@ -86,7 +86,8 @@ function DashboardHeader() {
                 className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-full shadow-md"
               /> */}
               <img
-                src={loggedInUser?.image || '/images/Admin_img.avif'}
+                // src={loggedInUser?.image || '/images/Admin_img.avif'}
+                src={loggedInUser?.image.startsWith('http') ? loggedInUser.image : `/images/${loggedInUser.image}`}
                 alt="User"
                 className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded-full shadow-md"
               />
