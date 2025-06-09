@@ -46,7 +46,7 @@ console.log('👀 document.cookie:', document.cookie);
     //       }
     //     }
     
-    console.log('🍪 document.cookie:', document.cookie);
+  console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
   
    
@@ -68,7 +68,9 @@ if (result) {
   try {
     const decoded = jwtDecode(result.token);
     console.log("🔓 Decoded Token in ProtectedRoute:", decoded);
-    setRole((decoded?.role || '').toLowerCase());
+
+    const inferredRole = result.tokenName.split('_')[0].toLowerCase(); // 👈 Infer role
+    setRole(inferredRole);
     setIsAuthenticated(true);
   } catch (err) {
     console.error('Invalid token', err);
