@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-    staff: {}
+    staffExist: {}
 }
 
 export const staffSlice = createSlice({
@@ -10,10 +10,10 @@ export const staffSlice = createSlice({
     initialState,
     reducers: {
         saveStaff: (state, action) => {
-            state.staff = action.payload
+            state.staffExist = action.payload.staffExist;
         },
         clearStaff: (state) => {
-            state.staff = {}
+            state.staffExist = {}
         }
 
     },
