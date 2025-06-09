@@ -77,7 +77,7 @@ const Staffcard = ({ onBloodBankClick }) => {
               </button>
             </div>
             <div className="modal-bloodbank-slim">
-              <BloodBankData />
+              <BloodBankData viewOnly={true} />
             </div>
           </div>
         </div>
