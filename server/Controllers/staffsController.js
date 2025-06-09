@@ -64,7 +64,7 @@ const staffLogin = async (req, res) => {
 
         const { email, password } = req.body;
 
-        if (!email || !password) {
+        if (!email || !password) {  
             return res.status(400).json({ error: 'All fields are required' })
         }
 
@@ -92,10 +92,9 @@ const staffLogin = async (req, res) => {
         });
 
         return res.status(200).json({
-            message: 'staff login successful', user: {
-                staffExist
-            }
-        })
+            message: 'staff login successful', user: staffExist,
+            
+        });
 
     } catch (error) {
         console.log(error);
