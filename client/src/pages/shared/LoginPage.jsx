@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { LoginContext } from '../../context/LoginContext';
 import { adminLogin, doctorLogin, staffLogin } from '../../services/loginServices';
-import { saveAdmin } from '../../redux/features/adminSlice';
-import { saveDoctor } from '../../redux/features/doctorSlice';
-import { saveStaff } from '../../redux/features/staffSlice';
+import { saveAdmin ,clearAdmin} from '../../redux/features/adminSlice';
+import { saveDoctor ,clearDoctor} from '../../redux/features/doctorSlice';
+import { saveStaff,clearStaff } from '../../redux/features/staffSlice';
 import { ThemeContext } from '../../context/ThemeContext';
 
 function LoginPage() {
