@@ -48,12 +48,12 @@ console.log('👀 document.cookie:', document.cookie);
     
     console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
-  console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
+  
     const result = getTokenFromCookies();
   if (result) {
     try {
       const decoded = jwtDecode(result.token);
-      console.log("Decoded Token:", decoded);
+      console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
       setRole((decoded?.role||'').toLowerCase());
       setIsAuthenticated(true);
     } catch (err) {
