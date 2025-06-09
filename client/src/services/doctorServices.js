@@ -1,22 +1,32 @@
 import axiosInstance from "../axios/axiosInstance"
 
 
+// export const listAppointments = async () => {
+//   try {
+//     const res = await axiosInstance.get('/doctor/appointments');
+//     console.log('Appointments :', res.data);
+
+//     if (Array.isArray(res.data)) {
+//       return res.data; 
+//     } else {
+//       console.warn('Unexpected   response:', res.data);
+//       return []; 
+//     }
+//   } catch (error) {
+//     console.error('Error in Appointment data:', error);
+//     throw error;
+//   }
+// };  
 export const listAppointments = async () => {
   try {
-    const res = await axiosInstance.get('/doctor/appointments');
+    const res = await axiosInstance.get('/doctor/appointments'); 
     console.log('Appointments :', res.data);
-
-    if (Array.isArray(res.data)) {
-      return res.data; 
-    } else {
-      console.warn('Unexpected   response:', res.data);
-      return []; 
-    }
+    return Array.isArray(res.data) ? res.data : [];
   } catch (error) {
     console.error('Error in Appointment data:', error);
     throw error;
   }
-};  
+};
 
 // export const getDoctorPatients = async () => {
 //   try {
