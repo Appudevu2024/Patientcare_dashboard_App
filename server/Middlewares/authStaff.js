@@ -1,20 +1,20 @@
  const jwt= require('jsonwebtoken');
- const createToken = require("../Utilities/generateToken");
- const cookieParser = require('cookie-parser');
+//  const createToken = require("../Utilities/generateToken");
+//  const cookieParser = require('cookie-parser');
  require('dotenv').config();
  
  const authStaff= (req,res,next)=>{
  try {
      //const {token}=req.cookies;
      //console.log(req.cookies);
-     const {staff_token} = req.cookies ;
-    console.log(staff_token);
+     const {Staff_token} = req.cookies ;
+    console.log(Staff_token);
     
-     if(!staff_token){
+     if(!Staff_token){
          return res.status(401).json({error:'Jwt not found'});
      }
      
-     const verifiedToken=jwt.verify(staff_token, process.env.JWT_SECRET)
+     const verifiedToken=jwt.verify(Staff_token, process.env.JWT_SECRET)
      if(!verifiedToken){
          return res.status(401).json({error:'User not authorized'});
      }
