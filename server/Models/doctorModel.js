@@ -50,7 +50,13 @@ const doctorSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
-      }
+      },
+
+       role: {
+        type: String,
+        default: 'doctor',
+        enum: ['doctor'],
+    }
 }, { timestamps: true })
 
 module.exports = new mongoose.model('Doctor', doctorSchema)
