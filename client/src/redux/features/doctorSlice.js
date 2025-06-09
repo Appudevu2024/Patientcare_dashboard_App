@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-    doctor: {}
+    doctorExist: {}
 }
 
 export const doctorSlice = createSlice({
@@ -10,10 +10,10 @@ export const doctorSlice = createSlice({
     initialState,
     reducers: {
         saveDoctor: (state, action) => {
-            state.doctor = action.payload
+            state.doctorExist = action.payload
         },
         clearDoctor: (state) => {
-            state.doctor = {}
+            state.doctorExist = {}
         }
 
     },
