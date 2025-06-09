@@ -84,7 +84,7 @@ const onSubmit = async () => {
 
     console.log("📝 Sending login request with:", values);
 
-    const data = await loginFn(values); // Make sure this returns { token, user }
+    const data = await loginFn(values); 
     console.log("🧠 Login response data:", data);
 
     const token = data.token;
