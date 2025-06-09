@@ -18,9 +18,9 @@ function DashboardHeader() {
   const adminData = useSelector((state) => state.admin?.adminExist);
   //console.log(adminData);
   const doctorData = useSelector((state) => state.doctor.doctorExist);
-   console.log("🧩 Doctor Data from Redux:", doctorData);
-  const staffData = useSelector((state) => state.staff?.staff);
- 
+   //console.log("🧩 Doctor Data from Redux:", doctorData);
+  const staffData = useSelector((state) => state.staff.staffExist);
+  console.log("🧩 Staff Data from Redux:", staffData);
 
   let loggedInUser = null;                                            
   if (adminData?._id) {
