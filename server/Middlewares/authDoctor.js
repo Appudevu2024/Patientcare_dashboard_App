@@ -1,6 +1,6 @@
  const jwt= require('jsonwebtoken');
- const createToken = require("../Utilities/generateToken");
- const cookieParser = require('cookie-parser');
+//  const createToken = require("../Utilities/generateToken");
+//  const cookieParser = require('cookie-parser');
  require('dotenv').config();
  
  const authDoctor= (req,res,next)=>{
