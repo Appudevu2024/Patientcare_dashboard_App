@@ -81,7 +81,7 @@ const login = async (req, res) => {
 
         return res.status(200).json({
             message: 'Doctor login successful', token,
-                doctorExist
+                user:doctorExist
            
         })
 
