@@ -48,6 +48,7 @@ console.log('👀 document.cookie:', document.cookie);
     
     console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
+  console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
     const result = getTokenFromCookies();
   if (result) {
     try {
