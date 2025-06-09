@@ -48,7 +48,7 @@ function LoginPage() {
       if (role === 'admin') dispatch(saveAdmin(data.user ));
      //if (role === 'doctor') dispatch(saveDoctor(data.user)); // ✅ works ONLY if saveDoctor stores in doctorExist
  if (role === 'doctor') dispatch(saveDoctor({ doctorExist: data.user })); 
-      if (role === 'staff') dispatch(saveStaff(data.user));
+      if (role === 'staff') dispatch(saveStaff({staffExist:data.user}));
 
       toast.success(`${role} login successful`, { position: 'top-center' });
       console.log('navigating to', redirectPath);
