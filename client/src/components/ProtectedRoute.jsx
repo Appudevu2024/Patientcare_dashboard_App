@@ -81,24 +81,47 @@ if (result) {
   return { isAuthenticated, role,loading };
 };
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { isAuthenticated, role, loading } = useAuth(allowedRoles);
-   if (loading)  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div className="spinner" />
-    </div>
-  );
+// const ProtectedRoute = ({ children, allowedRoles }) => {
+//   const { isAuthenticated, role, loading } = useAuth(allowedRoles);
+//    if (loading)  return (
+//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+//       <div className="spinner" />
+//     </div>
+//   );
 
-  // if (!isAuthenticated|| !allowedRoles.includes(role)) {
-  //   // Redirect to login if not authenticated
-  //   return <Navigate to="/" replace />;
-  // }
-if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
-  return <Navigate to="/" replace />;
-}
+//   // if (!isAuthenticated|| !allowedRoles.includes(role)) {
+//   //   // Redirect to login if not authenticated
+//   //   return <Navigate to="/" replace />;
+//   // }
+// if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
+//   return <Navigate to="/" replace />;
+// }
   
 
-  return children; 
+//   return children; 
+// };
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { isAuthenticated, role, loading } = useAuth(allowedRoles);
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div className="spinner" />
+      </div>
+    );
+  }
+
+  // 🔍 Debugging logs before redirection decision
+  console.log("✅ isAuthenticated:", isAuthenticated);
+  console.log("✅ role:", role);
+  console.log("✅ allowedRoles:", allowedRoles);
+  console.log("✅ allowedRoles includes role:", allowedRoles.map(r => r.toLowerCase()).includes(role));
+
+  if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;
