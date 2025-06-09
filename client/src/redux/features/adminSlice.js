@@ -1,17 +1,21 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  adminExist: null,
+};
+
+
 const adminSlice = createSlice({
   name: 'admin',
-  initialState: {
-    admin: null,
-  },
+  initialState,
+  
   reducers: {
     saveAdmin: (state, action) => {
-      state.admin = action.payload;
+      state.adminExist = action.payload;
     },
     clearAdmin: (state) => {
-      state.admin = null;
+      state.adminExist = null;
     },
   },
 });
