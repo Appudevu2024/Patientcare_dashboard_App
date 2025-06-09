@@ -44,6 +44,10 @@ function DashboardHeader() {
         dispatch(clearStaff());
       }
       //await persistor.purge();
+    ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(cookieName => {
+      document.cookie = `${cookieName}=; path=/; max-age=0`;
+    });
+
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
