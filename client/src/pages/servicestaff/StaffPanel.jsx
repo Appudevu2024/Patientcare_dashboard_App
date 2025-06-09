@@ -22,9 +22,15 @@ export default function StaffPanel() {
   const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const staffData = useSelector((state) => state.staff?.staff?.staffExist);
+  const staffData = useSelector((state) => state.staff?.staffExist);
 
+ useEffect(() => {
+   if (!staffData?._id) {
+     console.warn("Staff data not available. Consider redirect or show loader.");
+   }
+ }, [staffData]);
  
+  console.log("🔍 staffData from Redux:", staffData);
 
 const handleAddVitalsClick = (id) => {
   console.log("Selected patient ID:", id);  // Debug log
