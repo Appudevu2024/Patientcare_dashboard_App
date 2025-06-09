@@ -100,7 +100,7 @@ const DoctorCards = ({ onBloodBankClick }) => {
               </button>
             </div>
             <div className="modal-bloodbank-slim W-[100px]">
-              <BloodBankData />
+              <BloodBankData viewOnly={true} />
             </div>
 
           </div>
