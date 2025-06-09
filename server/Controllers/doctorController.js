@@ -47,6 +47,7 @@ const registerDoctor = async (req, res) => {
     }
 
 }
+
 const login = async (req, res) => {
     try {
 
@@ -77,14 +78,11 @@ const login = async (req, res) => {
             path: '/',
             maxAge: 24 * 60 * 60 * 1000, // 1 day (optional)
         });
-
-
         return res.status(200).json({
             message: 'Doctor login successful', token,
                 user:doctorExist
            
         })
-
 
     } catch (error) {
         console.log(error);
