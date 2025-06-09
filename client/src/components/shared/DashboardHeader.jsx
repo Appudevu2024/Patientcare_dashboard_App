@@ -15,7 +15,7 @@ function DashboardHeader() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const adminData = useSelector((state) => state.admin?.admin);
+  const adminData = useSelector((state) => state.admin?.adminExist);
   //console.log(adminData);
   const doctorData = useSelector((state) => state.doctor?.doctorExist);
    console.log("🧩 Doctor Data from Redux:", doctorData);
