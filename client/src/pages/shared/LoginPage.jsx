@@ -31,8 +31,20 @@ function LoginPage() {
         loginFn = staffLogin;
         redirectPath = '/staffpanel';
       }
+ const data = await loginFn(values); // <- get the token from backend here
+    const token = data.token; // adjust based on actual response shape
 
-      const data = await loginFn(values);
+    // ✅ Set token in cookie (for useAuth to find it)
+    const cookieName = {
+      admin: 'Admin_token',
+      doctor: 'Doctor_token',
+      staff: 'Staff_token',
+    }[role];
+
+    console.log("✅ Token to set:", token);
+    document.cookie = `${cookieName}=${token}; path=/; max-age=86400`;
+    console.log("🍪 After setting cookie:", document.cookie);
+     
       if (role === 'admin') dispatch(saveAdmin(data.user ));
       if (role === 'doctor') dispatch(saveDoctor(data.user));
       if (role === 'staff') dispatch(saveStaff(data.user));
