@@ -43,7 +43,7 @@ const createAppointment = async (req, res) => {
   const getAllAppointments = async (req, res) => {
     try {
       const { role, id } = req.user;
-  
+  console.log('User in getAllAppointments:', req.user);
       let query = {};
       if (role === 'doctor') {
         query = { doctor: id }; // Only show appointments for logged-in doctor
