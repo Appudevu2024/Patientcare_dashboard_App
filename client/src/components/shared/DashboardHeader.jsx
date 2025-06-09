@@ -18,22 +18,24 @@ function DashboardHeader() {
   const adminData = useSelector((state) => state.admin?.adminExist);
   //console.log(adminData);
   const doctorData = useSelector((state) => state.doctor.doctorExist);
-   //console.log("🧩 Doctor Data from Redux:", doctorData);
+  //console.log("🧩 Doctor Data from Redux:", doctorData);
   const staffData = useSelector((state) => state.staff.staffExist);
+  console.log(adminData);
+  console.log(doctorData);
   console.log("🧩 Staff Data from Redux:", staffData);
 
-  let loggedInUser = null;                                            
+  let loggedInUser = null;
   if (adminData?._id) {
     loggedInUser = { name: 'Admin', role: 'Admin', image: adminData.image };
   } else if (doctorData?._id) {
-    loggedInUser = { name: doctorData.name ||'Doctor', role: 'Doctor', image: doctorData.image || 'dummy-female-img.webp'};
+    loggedInUser = { name: doctorData.name || 'Doctor', role: 'Doctor', image: doctorData.image || 'dummy-female-img.webp' };
   } else if (staffData?._id) {
-    loggedInUser = { name: staffData.name || 'Satff', role: 'Staff', image: staffData.image|| 'dummy-female-img.webp' };
+    loggedInUser = { name: staffData.name || 'Staff', role: 'Staff', image: staffData.image || 'dummy-female-img.webp' };
   }
 
   const handleLogout = async () => {
     try {
-      if (adminData?.email) { 
+      if (adminData?.email) {
         await adminLogout();
         dispatch(clearAdmin());
       } else if (doctorData?.doctorExist?._id) {
@@ -43,11 +45,11 @@ function DashboardHeader() {
         await staffLogout();
         dispatch(clearStaff());
       }
-      
-    ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(cookieName => {
-      document.cookie = `${cookieName}=; path=/; max-age=0`;
-    });
-await persistor.purge();
+
+      ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(cookieName => {
+        document.cookie = `${cookieName}=; path=/; max-age=0`;
+      });
+      await persistor.purge();
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
