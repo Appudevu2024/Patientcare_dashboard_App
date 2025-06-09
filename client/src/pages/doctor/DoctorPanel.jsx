@@ -34,7 +34,7 @@ export default function DoctorPanel() {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
 
- const doctorData = useSelector((state) => state.doctor?.doctorExist);
+ const doctorData = useSelector((state) => state.doctor.doctorExist);
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const tab = query.get('tab');
