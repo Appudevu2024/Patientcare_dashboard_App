@@ -9,7 +9,7 @@ const useAuth = (allowedRoles) => {
 
   const getTokenFromCookies = () => {
   const cookie = document.cookie;
-
+console.log('👀 document.cookie:', document.cookie);
   const roleToTokenMap = {
     admin: 'Admin_token',
     doctor: 'Doctor_token',
