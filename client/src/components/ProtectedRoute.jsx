@@ -68,9 +68,7 @@ if (result) {
   try {
     const decoded = jwtDecode(result.token);
     console.log("🔓 Decoded Token in ProtectedRoute:", decoded);
-
-    const inferredRole = result.tokenName.split('_')[0].toLowerCase(); // 👈 Infer role
-    setRole(inferredRole);
+    setRole((decoded?.role || '').toLowerCase());
     setIsAuthenticated(true);
   } catch (err) {
     console.error('Invalid token', err);
