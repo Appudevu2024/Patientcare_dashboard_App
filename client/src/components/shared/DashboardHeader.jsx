@@ -43,11 +43,11 @@ function DashboardHeader() {
         await staffLogout();
         dispatch(clearStaff());
       }
-      //await persistor.purge();
+      
     ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(cookieName => {
       document.cookie = `${cookieName}=; path=/; max-age=0`;
     });
-
+await persistor.purge();
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
