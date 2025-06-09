@@ -117,9 +117,12 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   console.log("✅ allowedRoles:", allowedRoles);
   console.log("✅ allowedRoles includes role:", allowedRoles.map(r => r.toLowerCase()).includes(role));
 
-  if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
-    return <Navigate to="/" replace />;
-  }
+  // if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
+  //   return <Navigate to="/" replace />;
+  // }
+  if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role.toLowerCase())) {
+  return <Navigate to="/" replace />;
+}
 
   return children;
 };
