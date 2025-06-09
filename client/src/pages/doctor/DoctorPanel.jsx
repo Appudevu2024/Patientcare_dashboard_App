@@ -35,6 +35,7 @@ export default function DoctorPanel() {
   const { theme } = useContext(ThemeContext);
 
  const doctorData = useSelector((state) => state.doctor.doctorExist);
+ console.log("🔍 doctorData from Redux:", doctorData);
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const tab = query.get('tab');
