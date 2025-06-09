@@ -23,7 +23,7 @@
          return res.status(401).json({error:'Access denied'});
      }
  
-     req.doctor=verifiedToken.id;
+     req.user=verifiedToken.id;
      next();
  } catch (error) {
      
