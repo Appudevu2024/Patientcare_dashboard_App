@@ -46,7 +46,8 @@ const createAppointment = async (req, res) => {
   console.log('User in getAllAppointments:', req.user);
       let query = {};
       if (role === 'doctor') {
-        query = { doctor: id }; // Only show appointments for logged-in doctor
+        // query = { doctor: id }; // Only show appointments for logged-in doctor
+        query = { doctor: new mongoose.Types.ObjectId(id) };
       }
   
       const appointments = await appointmentDB.find(query).populate('doctor', '_id name');
