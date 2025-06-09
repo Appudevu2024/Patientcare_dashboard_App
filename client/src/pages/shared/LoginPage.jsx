@@ -97,7 +97,7 @@ console.log("🧠 Login response data:", data);
     });
 
     document.cookie = `${cookieName}=${token}; path=/; max-age=86400`;
-
+console.log("🍪 New cookie set:", document.cookie);
     clearFns.forEach(fn => fn()); // Clear other roles
     saveFn(data); // Save current role's data
 
