@@ -49,17 +49,31 @@ console.log('👀 document.cookie:', document.cookie);
     console.log('🍪 document.cookie:', document.cookie);
   console.log('🧠 Matched token:', getTokenFromCookies());
   
-    const result = getTokenFromCookies();
-  if (result) {
-    try {
-      const decoded = jwtDecode(result.token);
-      console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
-      setRole((decoded?.role||'').toLowerCase());
-      setIsAuthenticated(true);
-    } catch (err) {
-      console.error('Invalid token', err);
-    }
+   
+  // if (result) {
+  //   try {
+  //     const result = getTokenFromCookies();
+  //     const decoded = jwtDecode(result.token);
+       
+  //     console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
+      
+  //     setRole((decoded?.role||'').toLowerCase());
+  //     setIsAuthenticated(true);
+  //   } catch (err) {
+  //     console.error('Invalid token', err);
+  //   }
+  // }
+  const result = getTokenFromCookies();
+if (result) {
+  try {
+    const decoded = jwtDecode(result.token);
+    console.log("🔓 Decoded Token in ProtectedRoute:", decoded);
+    setRole((decoded?.role || '').toLowerCase());
+    setIsAuthenticated(true);
+  } catch (err) {
+    console.error('Invalid token', err);
   }
+}
       
     setLoading(false);
   }, []);
