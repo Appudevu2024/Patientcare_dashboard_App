@@ -82,29 +82,36 @@ const onSubmit = async () => {
       clearFns = [() => dispatch(clearAdmin()), () => dispatch(clearDoctor())];
     }
 
-    const data = await loginFn(values);
+    console.log("📝 Sending login request with:", values);
+
+    const data = await loginFn(values); // Make sure this returns { token, user }
+    console.log("🧠 Login response data:", data);
+
     const token = data.token;
-console.log("🧠 Login response data:", data);
+    if (!token) throw new Error("No token received");
+
     const cookieName = {
       admin: 'Admin_token',
       doctor: 'Doctor_token',
       staff: 'Staff_token',
     }[role];
 
-    // Clear all other tokens before setting the new one
+    // Clear old cookies
     ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(name => {
       document.cookie = `${name}=; path=/; max-age=0`;
     });
 
     document.cookie = `${cookieName}=${token}; path=/; max-age=86400`;
-console.log("🍪 New cookie set:", document.cookie);
-    clearFns.forEach(fn => fn()); // Clear other roles
-    saveFn(data); // Save current role's data
+    console.log("🍪 Cookie set:", document.cookie);
+
+    clearFns.forEach(fn => fn());
+    saveFn(data);
 
     toast.success(`${role} login successful`, { position: 'top-center' });
     setTimeout(() => navigate(redirectPath), 100);
 
   } catch (err) {
+    console.error("❌ Login error details:", err);
     toast.error(err?.response?.data?.error || 'Login failed', {
       position: 'top-center',
     });
