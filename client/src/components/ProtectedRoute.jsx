@@ -89,11 +89,13 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     </div>
   );
 
-  if (!isAuthenticated|| !allowedRoles.includes(role)) {
-    // Redirect to login if not authenticated
-    return <Navigate to="/" replace />;
-  }
-
+  // if (!isAuthenticated|| !allowedRoles.includes(role)) {
+  //   // Redirect to login if not authenticated
+  //   return <Navigate to="/" replace />;
+  // }
+if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
+  return <Navigate to="/" replace />;
+}
   
 
   return children; 
