@@ -142,7 +142,7 @@ const handleAddVitalsClick = (id) => {
                 </button>
               </div>
               <div className="modal-bloodbank-slim">
-                <BloodBankData  viewOnly={true}/>
+                <BloodBankData viewOnly={true}/>
               </div>
             </div>
           </div>
