@@ -43,7 +43,12 @@ const staffSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
-      }
+      },
+       role: {
+        type: String,
+        default: 'staff',
+        enum: ['staff'],
+    }
 }, { timestamps: true });
 
 module.exports = new mongoose.model('staffs', staffSchema);
