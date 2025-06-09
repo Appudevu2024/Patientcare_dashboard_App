@@ -18,13 +18,23 @@ export const listAppointments = async () => {
   }
 };  
 
+// export const getDoctorPatients = async () => {
+//   try {
+//     const res = await axiosInstance.get('/doctor/patients/by-doctor');
+//     return res.data.patients || [];
+//   } catch (error) {
+//     console.error('Error fetching doctor patients:', error);
+//     throw error;
+//   }
+// };
+
 export const getDoctorPatients = async () => {
   try {
     const res = await axiosInstance.get('/doctor/patients/by-doctor');
     return res.data.patients || [];
   } catch (error) {
-    console.error('Error fetching doctor patients:', error);
-    throw error;
+    console.error('Error fetching doctor patients:', error.response?.data?.message || error.message);
+    throw new Error(error.response?.data?.message || 'Failed to fetch patients');
   }
 };
 
