@@ -34,7 +34,13 @@ export default function DoctorPanel() {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
 
- const doctorData = useSelector((state) => state.doctor.doctorExist);
+ const doctorData = useSelector((state) => state.doctor?.doctorExist);
+useEffect(() => {
+  if (!doctorData?._id) {
+    console.warn("Doctor data not available. Consider redirect or show loader.");
+  }
+}, [doctorData]);
+
  console.log("🔍 doctorData from Redux:", doctorData);
   useEffect(() => {
     const query = new URLSearchParams(location.search);
