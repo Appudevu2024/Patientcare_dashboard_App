@@ -18,49 +18,99 @@ function LoginPage() {
   const [values, setValues] = useState({ email: '', password: '' });
   const [role, setRole] = useState('admin');
 
-  const onSubmit = async () => {
-    try {
-      let loginFn, redirectPath;
-      if (role === 'admin') {
-        loginFn = adminLogin;
-        redirectPath = '/adminpanel';
-      } else if (role === 'doctor') {
-        loginFn = doctorLogin;
-        redirectPath = '/doctorpanel';
-      } else {
-        loginFn = staffLogin;
-        redirectPath = '/staffpanel';
-      }
- const data = await loginFn(values); // <- get the token from backend here
-    const token = data.token; // adjust based on actual response shape
+//   const onSubmit = async () => {
+//     try {
+//       let loginFn, redirectPath;
+//       if (role === 'admin') {
+//         loginFn = adminLogin;
+//         redirectPath = '/adminpanel';
+//       } else if (role === 'doctor') {
+//         loginFn = doctorLogin;
+//         redirectPath = '/doctorpanel';
+//       } else {
+//         loginFn = staffLogin;
+//         redirectPath = '/staffpanel';
+//       }
+//  const data = await loginFn(values); // <- get the token from backend here
+//     const token = data.token; // adjust based on actual response shape
 
-    // ✅ Set token in cookie (for useAuth to find it)
+//     // ✅ Set token in cookie (for useAuth to find it)
+//     const cookieName = {
+//       admin: 'Admin_token',
+//       doctor: 'Doctor_token',
+//       staff: 'Staff_token',
+//     }[role];
+
+//     console.log("✅ Token to set:", token);
+//     document.cookie = `${cookieName}=${token}; path=/; max-age=86400`;
+//     console.log("🍪 After setting cookie:", document.cookie);
+     
+//       if (role === 'admin') dispatch(saveAdmin(data.user ));
+//      //if (role === 'doctor') dispatch(saveDoctor(data.user)); // ✅ works ONLY if saveDoctor stores in doctorExist
+//  if (role === 'doctor') dispatch(saveDoctor({ doctorExist: data.user })); 
+//       if (role === 'staff') dispatch(saveStaff({staffExist:data.user}));
+
+//       toast.success(`${role} login successful`, { position: 'top-center' });
+//       console.log('navigating to', redirectPath);
+//       setTimeout(() => navigate(redirectPath), 100);
+//        console.log("✅ onSubmit finished");
+
+//     } catch (err) {
+//       toast.error(err?.response?.data?.error || 'Login failed', {
+//         position: 'top-center',
+//       });
+//     }
+//   };
+const onSubmit = async () => {
+  try {
+    let loginFn, redirectPath, saveFn, clearFns = [];
+
+    if (role === 'admin') {
+      loginFn = adminLogin;
+      redirectPath = '/adminpanel';
+      saveFn = (data) => dispatch(saveAdmin(data.user));
+      clearFns = [() => dispatch(clearDoctor()), () => dispatch(clearStaff())];
+    } else if (role === 'doctor') {
+      loginFn = doctorLogin;
+      redirectPath = '/doctorpanel';
+      saveFn = (data) => dispatch(saveDoctor({ doctorExist: data.user }));
+      clearFns = [() => dispatch(clearAdmin()), () => dispatch(clearStaff())];
+    } else {
+      loginFn = staffLogin;
+      redirectPath = '/staffpanel';
+      saveFn = (data) => dispatch(saveStaff({ staffExist: data.user }));
+      clearFns = [() => dispatch(clearAdmin()), () => dispatch(clearDoctor())];
+    }
+
+    const data = await loginFn(values);
+    const token = data.token;
+
     const cookieName = {
       admin: 'Admin_token',
       doctor: 'Doctor_token',
       staff: 'Staff_token',
     }[role];
 
-    console.log("✅ Token to set:", token);
+    // Clear all other tokens before setting the new one
+    ['Admin_token', 'Doctor_token', 'Staff_token'].forEach(name => {
+      document.cookie = `${name}=; path=/; max-age=0`;
+    });
+
     document.cookie = `${cookieName}=${token}; path=/; max-age=86400`;
-    console.log("🍪 After setting cookie:", document.cookie);
-     
-      if (role === 'admin') dispatch(saveAdmin(data.user ));
-     //if (role === 'doctor') dispatch(saveDoctor(data.user)); // ✅ works ONLY if saveDoctor stores in doctorExist
- if (role === 'doctor') dispatch(saveDoctor({ doctorExist: data.user })); 
-      if (role === 'staff') dispatch(saveStaff({staffExist:data.user}));
 
-      toast.success(`${role} login successful`, { position: 'top-center' });
-      console.log('navigating to', redirectPath);
-      setTimeout(() => navigate(redirectPath), 100);
-       console.log("✅ onSubmit finished");
+    clearFns.forEach(fn => fn()); // Clear other roles
+    saveFn(data); // Save current role's data
 
-    } catch (err) {
-      toast.error(err?.response?.data?.error || 'Login failed', {
-        position: 'top-center',
-      });
-    }
-  };
+    toast.success(`${role} login successful`, { position: 'top-center' });
+    setTimeout(() => navigate(redirectPath), 100);
+
+  } catch (err) {
+    toast.error(err?.response?.data?.error || 'Login failed', {
+      position: 'top-center',
+    });
+  }
+};
+
 
   return (
    <div className="flex items-center justify-center bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 sm:px-6 py-10 sm:py-16 overflow-auto">
