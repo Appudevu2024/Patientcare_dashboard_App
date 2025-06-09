@@ -10,7 +10,7 @@ export const doctorSlice = createSlice({
     initialState,
     reducers: {
         saveDoctor: (state, action) => {
-            state.doctorExist = action.payload
+            state.doctorExist = action.payload.doctorExist;
         },
         clearDoctor: (state) => {
             state.doctorExist = {}
