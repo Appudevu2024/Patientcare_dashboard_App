@@ -79,10 +79,18 @@ const staffLogin = async (req, res) => {
             return res.status(400).json({ error: 'Passwords does not  match' })
         }
         res.clearCookie('Admin_token');
-        res.clearCookie('doctor_token');
-        const token = createToken(staffExist._id, 'staff')
+        res.clearCookie('Doctor_token');
+        const token = createToken(staffExist._id, staffExist.role)
         //console.log(token,"token");
-        res.cookie("staff_token", token);
+        //res.cookie("Staff_token", token);
+        res.cookie("Staff_token", token, {
+            httpOnly: true,    // frontend JS can read it
+            secure: true,       // HTTPS required on Vercel
+            sameSite: 'None',   // cross-site cookies allowed
+            path: '/',
+            maxAge: 24 * 60 * 60 * 1000, // 1 day (optional)
+        });
+
         return res.status(200).json({
             message: 'staff login successful', user: {
                 staffExist
