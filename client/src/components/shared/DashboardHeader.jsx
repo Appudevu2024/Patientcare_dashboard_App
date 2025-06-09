@@ -43,7 +43,7 @@ function DashboardHeader() {
         await staffLogout();
         dispatch(clearStaff());
       }
-      await persistor.purge();
+      //await persistor.purge();
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
