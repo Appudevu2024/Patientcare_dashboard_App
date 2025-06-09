@@ -84,7 +84,7 @@ const onSubmit = async () => {
 
     const data = await loginFn(values);
     const token = data.token;
-
+console.log("🧠 Login response data:", data);
     const cookieName = {
       admin: 'Admin_token',
       doctor: 'Doctor_token',
