@@ -92,7 +92,7 @@ const staffLogin = async (req, res) => {
         });
 
         return res.status(200).json({
-            message: 'staff login successful', user: staffExist,
+            message: 'staff login successful', user: staffExist,token
             
         });
 
