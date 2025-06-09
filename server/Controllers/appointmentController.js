@@ -68,7 +68,7 @@ const getAllAppointments = async (req, res) => {
       // Filter only this doctor's appointments
       query = { doctor: new mongoose.Types.ObjectId(id) };
     }
-
+ console.log(query);
     const appointments = await appointmentDB
       .find(query)
       .populate('doctor', '_id name'); // populate doctor field
