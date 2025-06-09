@@ -106,7 +106,7 @@ const loggedin = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        res.clearCookie('doctor_token');
+        res.clearCookie('Doctor_token');
         return res.status(200).json({ message: 'doctor logout successful' })
     } catch (error) {
         console.log(error);
