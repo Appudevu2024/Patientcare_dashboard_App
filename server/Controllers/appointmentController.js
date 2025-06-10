@@ -81,6 +81,7 @@ const createAppointment = async (req, res) => {
 
 const getAllAppointments = async (req, res) => {
   try {
+    
     const { role, _id: id } = req.user;
 
     console.log('🧠 Authenticated User:', req.user);
