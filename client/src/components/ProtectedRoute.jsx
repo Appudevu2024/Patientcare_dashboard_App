@@ -8,98 +8,48 @@ const useAuth = (allowedRoles) => {
   const [loading, setLoading] = useState(true);
 
   const getTokenFromCookies = () => {
-  const cookie = document.cookie;
-console.log('👀 document.cookie:', document.cookie);
-  const roleToTokenMap = {
-    admin: 'Admin_token',
-    doctor: 'Doctor_token',
-    staff: 'Staff_token',
+    const cookie = document.cookie;
+    console.log('👀 document.cookie:', document.cookie);
+    const roleToTokenMap = {
+      admin: 'Admin_token',
+      doctor: 'Doctor_token',
+      staff: 'Staff_token',
+    };
+
+    for (let role of allowedRoles) {
+      const tokenName = roleToTokenMap[role.toLowerCase()];
+      const match = cookie.match(new RegExp(`${tokenName}=([^;]+)`));
+      if (match) return { token: match[1], tokenName };
+    }
+
+    return null;
   };
 
-  for (let role of allowedRoles) {
-    const tokenName = roleToTokenMap[role.toLowerCase()];
-    const match = cookie.match(new RegExp(`${tokenName}=([^;]+)`));
-    if (match) return { token: match[1], tokenName };
-  }
-
-  return null;
-};
-
   useEffect(() => {
-    
-    // const tokens = ['Admin_token', 'doctor_token', 'staff_token'];
-    // const tokenString = tokens
-    // .map(name => document.cookie.split('; ').find(cookie => cookie.startsWith(name)))
-    // .find(Boolean); 
-    // console.log(tokenString);
-    
-    //     if (tokenString) {
-    //       const token = tokenString.split('=')[1];
-    //       try {
-    //         const decoded = jwtDecode(token);
-    //         console.log(decoded.role);
-            
-    //         setRole(decoded.role);
-    //         setIsAuthenticated(true);
-    //       } catch (err) {
-    //         console.error('Invalid token', err);
-    //       }
-    //     }
-    
-  console.log('🍪 document.cookie:', document.cookie);
-  console.log('🧠 Matched token:', getTokenFromCookies());
-  
-   
-  // if (result) {
-  //   try {
-  //     const result = getTokenFromCookies();
-  //     const decoded = jwtDecode(result.token);
-       
-  //     console.log("🔓 Decoded Token in ProtectedRoute:", jwtDecode(result.token));
-      
-  //     setRole((decoded?.role||'').toLowerCase());
-  //     setIsAuthenticated(true);
-  //   } catch (err) {
-  //     console.error('Invalid token', err);
-  //   }
-  // }
-  const result = getTokenFromCookies();
-if (result) {
-  try {
-    const decoded = jwtDecode(result.token);
-    console.log("🔓 Decoded Token in ProtectedRoute:", decoded);
-    setRole((decoded?.role || '').toLowerCase());
-    setIsAuthenticated(true);
-  } catch (err) {
-    console.error('Invalid token', err);
-  }
-}
-      
+
+    console.log('🍪 document.cookie:', document.cookie);
+    console.log('🧠 Matched token:', getTokenFromCookies());
+
+
+    const result = getTokenFromCookies();
+    if (result) {
+      try {
+        const decoded = jwtDecode(result.token);
+        console.log("🔓 Decoded Token in ProtectedRoute:", decoded);
+        setRole((decoded?.role || '').toLowerCase());
+        setIsAuthenticated(true);
+      } catch (err) {
+        console.error('Invalid token', err);
+      }
+    }
+
     setLoading(false);
   }, []);
 
-  return { isAuthenticated, role,loading };
+  return { isAuthenticated, role, loading };
 };
 
-// const ProtectedRoute = ({ children, allowedRoles }) => {
-//   const { isAuthenticated, role, loading } = useAuth(allowedRoles);
-//    if (loading)  return (
-//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-//       <div className="spinner" />
-//     </div>
-//   );
 
-//   // if (!isAuthenticated|| !allowedRoles.includes(role)) {
-//   //   // Redirect to login if not authenticated
-//   //   return <Navigate to="/" replace />;
-//   // }
-// if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
-//   return <Navigate to="/" replace />;
-// }
-  
-
-//   return children; 
-// };
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { isAuthenticated, role, loading } = useAuth(allowedRoles);
 
@@ -121,8 +71,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   //   return <Navigate to="/" replace />;
   // }
   if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role.toLowerCase())) {
-  return <Navigate to="/" replace />;
-}
+    return <Navigate to="/" replace />;
+  }
 
   return children;
 };
