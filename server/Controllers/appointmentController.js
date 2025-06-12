@@ -56,7 +56,30 @@ const createAppointment = async (req, res) => {
 }
   };
 
+const getDoctorAppointments  = async (req, res) => {
+    try {
+       console.log('Authenticated doctor:', req.user);
+        const doctorId = req.user.id;
+      const appointments = await appointmentDB
+        .find({ doctor: doctorId })
+        .populate('appointment')      // Populates appointment info
+        .sort({ createdAt: -1 });
+  console.log('Found appointments:', appointments.length);
+      if (!appointments || appointments.length === 0) {
+        return res.status(404).json({ message: 'No appointments found' });
+      }
+  
+      res.status(200).json({ appointments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message || 'Failed to fetch appointments' });
+    }
+  };
 
+
+
+
+  
 
 const getAppointmentById = async (req, res) => {
   const appointment = await appointmentDB.findById(req.params.id).populate('doctor');
@@ -183,6 +206,7 @@ const updateAppointment = async (req, res) => {
 module.exports={
       createAppointment,
       getAllAppointments,
+      getDoctorAppointments,
       getAppointmentById,
       updateAppointment,
       deleteAppointment
