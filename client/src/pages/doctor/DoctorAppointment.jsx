@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listAppointments } from '../../services/doctorServices';
+import { getDoctorAppointments } from '../../services/doctorServices';
 
 export default function DoctorAppointment() {
   const [appointments, setAppointments] = useState([]);
@@ -9,7 +9,7 @@ export default function DoctorAppointment() {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await listAppointments();
+        const res = await getDoctorAppointments();
         setAppointments(res || []);
       } catch (err) {
         console.error('Error fetching appointments:', err);
