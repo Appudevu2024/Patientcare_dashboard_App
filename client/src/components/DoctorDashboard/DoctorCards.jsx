@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getDoctorPatients, listAppointments } from '../../services/doctorServices';
+import { getDoctorPatients, getDoctorAppointments } from '../../services/doctorServices';
 import Patients from '../../pages/shared/Patients';
 import { useSelector } from 'react-redux';
 import BloodBankData from '../../pages/shared/BloodBankData';
@@ -30,7 +30,7 @@ const DoctorCards = ({ onBloodBankClick }) => {
   }, []);
 
   const fetchAppointments = () => {
-    listAppointments()
+    getDoctorAppointments()
       .then((res) => {
         console.log('Fetched appointments:', res);
         setAppointments(res || []);
