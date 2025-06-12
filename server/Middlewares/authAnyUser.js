@@ -15,7 +15,7 @@ const authAnyUser = (req, res, next) => {
 
     // Attach info to req based on role
     req.user = {
-      id: decoded.id,
+      id:  decoded._id ||decoded.id,
       role: decoded.role
     };
 
