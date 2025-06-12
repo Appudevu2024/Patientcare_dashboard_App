@@ -28,15 +28,15 @@ export const listAppointments = async () => {
   }
 };
 
-// export const getDoctorPatients = async () => {
-//   try {
-//     const res = await axiosInstance.get('/doctor/patients/by-doctor');
-//     return res.data.patients || [];
-//   } catch (error) {
-//     console.error('Error fetching doctor patients:', error);
-//     throw error;
-//   }
-// };
+export const getDoctorAppointments = async () => {
+  try {
+    const res = await axiosInstance.get('/doctor/appointments/by-doctor');
+    return res.data.appointments || [];
+  } catch (error) {
+    console.error('Error fetching doctor appointments:', error);
+    throw error;
+  }
+};
 
 export const getDoctorPatients = async () => {
   try {
