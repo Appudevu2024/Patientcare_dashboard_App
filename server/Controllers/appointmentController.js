@@ -57,55 +57,6 @@ const createAppointment = async (req, res) => {
   };
 
 
-// const getAllAppointments = async (req, res) => {
-//   try {
-//     const { role, _id: id } = req.user;
-//     console.log('User in getAllAppointments:', req.user);
-//     let query = {};
-//     if (role === 'doctor') {
-//       // Filter only this doctor's appointments
-//       query = { doctor: new mongoose.Types.ObjectId(id) };
-//     }
-//  console.log(query);
-//     const appointments = await appointmentDB
-//       .find(query)
-//       .populate('doctor', '_id name'); // populate doctor field
-
-//     res.status(200).json(appointments);
-//   } catch (error) {
-//     console.error('Error in getAllAppointments:', error);
-//     res.status(error.status || 500).json({ error: error.message || 'Internal server error' });
-//   }
-// };
-
-// const getAllAppointments = async (req, res) => {
-//   try {
-
-//     const { role, _id: id } = req.user;
-
-//     console.log('🩺 Role:', role);
-//     console.log('🔍 Doctor ID:', id);
-
-//     let query = {};
-//     if (role === 'doctor') {
-//       query = { doctor: new mongoose.Types.ObjectId(id) };
-//     }
-
-//     console.log('📦 Mongo Query:', query);
-
-//     const appointments = await appointmentDB
-//       .find(query)
-//       .populate('doctor', '_id name');
-
-//     console.log('📅 Appointments returned:', appointments.length);
-
-//     res.status(200).json(appointments);
-//   } catch (error) {
-//     console.error('❌ Error in getAllAppointments:', error);
-//     res.status(error.status || 500).json({ error: error.message || 'Internal server error' });
-//   }
-// };
-
 
 const getAppointmentById = async (req, res) => {
   const appointment = await appointmentDB.findById(req.params.id).populate('doctor');
