@@ -1,6 +1,6 @@
 const appointmentDB= require('../Models/appointmentModel')
 const patientDB = require('../Models/patientModel'); 
-
+const mongoose = require('mongoose');
 
 const createAppointment = async (req, res) => {
     const { patientname,dateOfBirth,contact, doctor, date, time, status } = req.body;
@@ -41,7 +41,7 @@ const createAppointment = async (req, res) => {
 
   const getAllAppointments = async (req, res) => {
     try {
-      const { role, _id: id } = req.user;
+      const { role,  id } = req.user;
   console.log('User in getAllAppointments:', req.user);
       let query = {};
       if (role === 'doctor') {
