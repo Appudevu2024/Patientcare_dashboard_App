@@ -19,7 +19,7 @@ import axiosInstance from "../axios/axiosInstance"
 // };  
 export const listAppointments = async () => {
   try {
-    const res = await axiosInstance.get('/doctor/appointments'); 
+    const res = await axiosInstance.get('/doctor/appointments', { withCredentials: true }); 
     console.log('Appointments :', res.data);
     return Array.isArray(res.data) ? res.data : [];
   } catch (error) {
