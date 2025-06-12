@@ -24,13 +24,9 @@ const useAuth = (allowedRoles) => {
 
     return null;
   };
-
   useEffect(() => {
-
     console.log('🍪 document.cookie:', document.cookie);
     console.log('🧠 Matched token:', getTokenFromCookies());
-
-
     const result = getTokenFromCookies();
     if (result) {
       try {
@@ -42,17 +38,14 @@ const useAuth = (allowedRoles) => {
         console.error('Invalid token', err);
       }
     }
-
     setLoading(false);
   }, []);
 
   return { isAuthenticated, role, loading };
 };
 
-
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { isAuthenticated, role, loading } = useAuth(allowedRoles);
-
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -73,7 +66,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   if (!isAuthenticated || !allowedRoles.map(r => r.toLowerCase()).includes(role.toLowerCase())) {
     return <Navigate to="/" replace />;
   }
-
   return children;
 };
 
