@@ -41,14 +41,14 @@ const createAppointment = async (req, res) => {
 
   const getAllAppointments = async (req, res) => {
     try {
-      const { role,  id } = req.user;
+      const { role,  id:userId} = req.user;
   console.log('User in getAllAppointments:', req.user);
       let query = {};
       if (role === 'doctor') {
-        query = { doctor: new mongoose.Types.ObjectId(id)}; 
+        query = { doctor: userId}; 
       }
   console.log('📦 Mongo Query:', query);
-      const appointments = await appointmentDB.find(query).populate('doctor', '_id name');
+      const appointments = await appointmentDB.find(query).populate('doctor', 'name');
       res.status(200).json(appointments);
     } catch (error) {
       console.log(error);
