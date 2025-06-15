@@ -62,7 +62,6 @@ const getDoctorAppointments  = async (req, res) => {
         const doctorId = req.user.id;
       const appointments = await appointmentDB
         .find({ doctor: doctorId })
-        .populate('appointment')      // Populates appointment info
         .sort({ createdAt: -1 });
   console.log('Found appointments:', appointments.length);
       if (!appointments || appointments.length === 0) {
