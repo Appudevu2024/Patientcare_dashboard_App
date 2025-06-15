@@ -88,10 +88,14 @@ const DoctorCards = ({ onBloodBankClick }) => {
         />
       </div>
       {isModalOpen && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="bg-white dark:bg-gray-900 text-black dark:text-white rounded-lg shadow-lg max-w-5xl max-h-[90vh] overflow-y-auto p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg text-center font-bold">Blood Bank Information</h3>
+  // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  //   <div className="bg-white dark:bg-gray-900 text-black dark:text-white rounded-lg shadow-lg max-w-5xl max-h-[90vh] overflow-y-auto p-6">
+  //     <div className="flex justify-between items-center mb-4">
+  //       <h3 className="text-lg text-center font-bold">Blood Bank Information</h3>
+       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-5xl  max-h-[90vh] overflow-y-auto p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg text-center font-bold">Blood Bank Information</h3>
         <button
           onClick={() => setIsModalOpen(false)}
           className="btn btn-sm btn-circle btn-ghost dark:text-white"
