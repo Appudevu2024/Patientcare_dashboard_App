@@ -70,7 +70,7 @@ export default function DoctorPatients({onAddPresClick=()=>{}}) {
           className="input input-bordered mb-4 w-full max-w-xs"
         />
       </div>
-      <table className="table table-zebra w-full">
+      <table className="table table-md w-full text-sm">
         <thead className="bg-[#0967C2] text-white">
           <tr>
             <th>Name</th>
