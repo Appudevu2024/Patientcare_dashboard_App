@@ -164,8 +164,8 @@ export default function DoctorPatients({onAddPresClick=()=>{}}) {
       {/* Modal */}
       {showModal && selectedPatient && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-xl max-h-[80vh] overflow-y-auto">
-            <h3 className="text-xl font-bold text-[#0967C2] mb-4">Patient Details</h3>
+            <div className="bg-white dark:bg-gray-900 text-black dark:text-white p-6 rounded-lg shadow-lg w-[90%] max-w-xl max-h-[80vh] overflow-y-auto">
+      <h3 className="text-xl font-bold text-[#0967C2] dark:text-blue-400 mb-4">Patient Details</h3>
             <p><strong>Name: </strong> {selectedPatient.name}</p>
             <p><strong>DOB: </strong> {new Date(selectedPatient.dateOfBirth).toLocaleDateString('en-GB')}</p>
             <p><strong>Contact: </strong> {selectedPatient.contact}</p>
@@ -187,7 +187,7 @@ export default function DoctorPatients({onAddPresClick=()=>{}}) {
             )}
             {selectedPatient.prescriptions?.length > 0 ? (
               <div>
-                <h4 className="font-semibold text-lg text-blue-600">Latest Prescription:</h4>
+                <h4 className="font-semibold text-lg text-blue-600 dark:text-blue-400">Latest Prescription:</h4>
                 <p>{selectedPatient.prescriptions[selectedPatient.prescriptions.length - 1].prescription}</p>
               </div>
             ) : (
@@ -196,7 +196,7 @@ export default function DoctorPatients({onAddPresClick=()=>{}}) {
             <div className="mt-4 text-right">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 dark:hover:bg-red-700"
               >
                 Close
               </button>
